@@ -1,0 +1,5466 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>USMAN STORE DESK</title>
+
+<style>
+:root{
+--bg:#f6f7fb;
+--card:#fff;
+--text:#151823;
+--muted:#73798a;
+--line:#e8eaf0;
+--primary:#111827;
+--accent:#2563eb;
+--green:#16a34a;
+--red:#dc2626;
+--yellow:#d97706;
+--shadow:0 14px 35px rgba(20,25,40,.08);
+--radius:18px
+}
+
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+background:var(--bg);
+color:var(--text)
+}
+
+button,input,select{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+
+.auth-screen{
+min-height:100vh;
+display:grid;
+place-items:center;
+padding:24px;
+background:radial-gradient(circle at top left,#e8eefc,transparent 35%),var(--bg)
+}
+
+.auth-card{
+width:min(980px,100%);
+display:grid;
+grid-template-columns:1fr 1fr;
+background:var(--card);
+border:1px solid var(--line);
+border-radius:28px;
+box-shadow:var(--shadow);
+overflow:hidden
+}
+
+.auth-info{
+padding:48px;
+background:#111827;
+color:#fff;
+display:flex;
+flex-direction:column;
+justify-content:center
+}
+
+.brand{
+font-weight:900;
+letter-spacing:.08em;
+font-size:24px
+}
+
+.auth-info h1{
+font-size:42px;
+line-height:1.05;
+margin:24px 0 14px
+}
+
+.auth-info p{
+color:#cbd5e1;
+line-height:1.6
+}
+
+.price{
+font-size:30px;
+font-weight:900;
+margin:26px 0
+}
+
+.contact{
+display:grid;
+gap:9px;
+color:#dbeafe
+}
+
+.auth-form{padding:42px}
+
+.auth-tabs{
+display:flex;
+gap:8px;
+background:#f2f4f8;
+padding:5px;
+border-radius:12px;
+margin-bottom:24px
+}
+
+.auth-tabs button{
+flex:1;
+border:0;
+background:transparent;
+padding:11px;
+border-radius:9px
+}
+
+.auth-tabs button.active{
+background:#fff;
+box-shadow:0 3px 12px #0001;
+font-weight:800
+}
+
+.field{
+display:grid;
+gap:7px;
+margin-bottom:16px
+}
+
+.field label{
+font-size:13px;
+font-weight:800
+}
+
+.field input,.field select{
+width:100%;
+border:1px solid var(--line);
+background:#fff;
+border-radius:11px;
+padding:12px 13px;
+outline:none
+}
+
+.field input:focus,.field select:focus{
+border-color:#9ab7ff;
+box-shadow:0 0 0 3px #2563eb14
+}
+
+.btn{
+border:1px solid var(--line);
+background:#fff;
+border-radius:11px;
+padding:10px 14px;
+font-weight:750
+}
+
+.btn-primary{
+background:var(--primary);
+border-color:var(--primary);
+color:#fff
+}
+
+.btn-blue{
+background:var(--accent);
+border-color:var(--accent);
+color:#fff
+}
+
+.btn-danger{
+color:#fff;
+background:var(--red);
+border-color:var(--red)
+}
+
+.btn-small{
+padding:7px 9px;
+font-size:12px
+}
+
+.muted{color:var(--muted)}
+
+.msg{
+padding:10px 12px;
+border-radius:10px;
+background:#f1f5f9;
+font-size:13px;
+margin:12px 0
+}
+
+.msg.error{
+background:#fef2f2;
+color:#991b1b
+}
+
+.msg.ok{
+background:#f0fdf4;
+color:#166534
+}
+
+.subtle{
+background:#f8fafc;
+border:1px dashed var(--line);
+padding:12px;
+border-radius:12px;
+font-size:12px;
+line-height:1.55
+}
+
+/* =========================
+   APP
+========================= */
+
+.app{min-height:100vh}
+
+.sidebar{
+position:fixed;
+left:0;
+top:0;
+bottom:0;
+width:240px;
+background:#111827;
+color:#fff;
+padding:20px 14px;
+z-index:40;
+transition:.25s
+}
+
+.side-brand{
+padding:12px 12px 28px;
+font-weight:900;
+letter-spacing:.08em
+}
+
+.nav{
+display:grid;
+gap:7px
+}
+
+.nav button{
+border:0;
+background:transparent;
+color:#cbd5e1;
+text-align:left;
+padding:12px 13px;
+border-radius:11px
+}
+
+.nav button.active,.nav button:hover{
+background:#fff;
+color:#111827
+}
+
+.main{
+margin-left:240px;
+min-height:100vh
+}
+
+.topbar{
+height:76px;
+background:#fff;
+border-bottom:1px solid var(--line);
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 24px;
+position:sticky;
+top:0;
+z-index:20
+}
+
+.top-left{
+display:flex;
+align-items:center;
+gap:12px
+}
+
+.menu{
+display:none;
+border:1px solid var(--line);
+background:#fff;
+border-radius:10px;
+width:40px;
+height:40px
+}
+
+.top-title{
+font-size:20px;
+font-weight:900
+}
+
+.top-right{
+display:flex;
+align-items:center;
+gap:12px
+}
+
+.avatar{
+width:38px;
+height:38px;
+border-radius:50%;
+background:#111827;
+color:#fff;
+display:grid;
+place-items:center;
+font-weight:900
+}
+
+.page{
+padding:24px;
+max-width:1500px;
+margin:auto
+}
+
+.view{display:none}
+.view.active{display:block}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:14px
+}
+
+.card{
+background:#fff;
+border:1px solid var(--line);
+border-radius:var(--radius);
+padding:18px;
+box-shadow:0 7px 25px #00000005
+}
+
+.stat-label{
+font-size:12px;
+color:var(--muted);
+font-weight:800
+}
+
+.stat-value{
+font-size:25px;
+font-weight:900;
+margin-top:9px
+}
+
+.section{margin-top:18px}
+
+.section-head{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:12px;
+margin-bottom:12px
+}
+
+.section-head h3{margin:0}
+
+.table-wrap{
+overflow:auto;
+background:#fff;
+border:1px solid var(--line);
+border-radius:var(--radius)
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+min-width:760px
+}
+
+th,td{
+text-align:left;
+padding:13px 14px;
+border-bottom:1px solid var(--line);
+font-size:13px
+}
+
+th{
+font-size:11px;
+color:var(--muted);
+text-transform:uppercase;
+letter-spacing:.06em
+}
+
+tr:last-child td{border-bottom:0}
+
+.product-name{font-weight:800}
+
+.badge{
+display:inline-flex;
+align-items:center;
+padding:5px 8px;
+border-radius:999px;
+font-size:11px;
+font-weight:800
+}
+
+.badge-green{
+background:#dcfce7;
+color:#166534
+}
+
+.badge-red{
+background:#fee2e2;
+color:#991b1b
+}
+
+.badge-yellow{
+background:#fef3c7;
+color:#92400e
+}
+
+.toolbar{
+display:flex;
+gap:8px;
+flex-wrap:wrap
+}
+
+.search{min-width:220px}
+
+.chart{
+height:230px;
+display:flex;
+align-items:flex-end;
+gap:10px;
+padding:20px 8px 0
+}
+
+.bar-wrap{
+height:100%;
+flex:1;
+display:flex;
+flex-direction:column;
+justify-content:flex-end;
+align-items:center;
+gap:7px
+}
+
+.bar{
+width:100%;
+max-width:44px;
+background:#2563eb;
+border-radius:8px 8px 3px 3px;
+min-height:3px
+}
+
+.bar-label{
+font-size:10px;
+color:var(--muted)
+}
+
+.form-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:14px
+}
+
+.full{grid-column:1/-1}
+
+.modal-overlay{
+position:fixed;
+inset:0;
+background:#0f172a88;
+display:none;
+place-items:center;
+padding:20px;
+z-index:100
+}
+
+.modal-overlay.open{display:grid}
+
+.modal{
+width:min(650px,100%);
+max-height:90vh;
+overflow:auto;
+background:#fff;
+border-radius:20px;
+box-shadow:var(--shadow)
+}
+
+.modal-head,.modal-foot{
+padding:17px 20px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+border-bottom:1px solid var(--line)
+}
+
+.modal-foot{
+border-top:1px solid var(--line);
+border-bottom:0;
+justify-content:flex-end;
+gap:8px
+}
+
+.modal-head h3{margin:0}
+
+.close{
+border:0;
+background:transparent;
+font-size:27px
+}
+
+.modal-body{padding:20px}
+
+.empty{
+text-align:center;
+padding:35px;
+color:var(--muted)
+}
+
+.settings-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:14px
+}
+
+.toast{
+position:fixed;
+right:20px;
+bottom:20px;
+background:#111827;
+color:#fff;
+padding:12px 15px;
+border-radius:12px;
+opacity:0;
+transform:translateY(10px);
+transition:.2s;
+z-index:200
+}
+
+.toast.show{
+opacity:1;
+transform:none
+}
+
+.admin-kpi{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px
+}
+
+/* =========================
+   ADMIN LOGIN
+========================= */
+
+.admin-login-box{
+max-width:460px;
+margin:auto
+}
+
+.admin-login-title{
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:8px
+}
+
+.admin-lock{
+width:42px;
+height:42px;
+border-radius:12px;
+background:#111827;
+color:#fff;
+display:grid;
+place-items:center;
+font-size:20px
+}
+
+.admin-back{
+margin-top:10px;
+width:100%
+}
+
+.admin-note{
+margin-top:14px
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1050px){
+.cards{
+grid-template-columns:repeat(3,1fr)
+}
+
+.admin-kpi{
+grid-template-columns:repeat(2,1fr)
+}
+}
+
+@media(max-width:760px){
+
+.auth-card{
+grid-template-columns:1fr
+}
+
+.auth-info{
+padding:30px
+}
+
+.auth-info h1{
+font-size:34px
+}
+
+.sidebar{
+transform:translateX(-100%)
+}
+
+.sidebar.open{
+transform:none
+}
+
+.main{
+margin-left:0
+}
+
+.menu{
+display:grid;
+place-items:center
+}
+
+.topbar{
+padding:0 14px
+}
+
+.page{
+padding:14px
+}
+
+.cards{
+grid-template-columns:1fr 1fr
+}
+
+.form-grid,.settings-grid{
+grid-template-columns:1fr
+}
+
+.full{
+grid-column:auto
+}
+
+.top-right .date{
+display:none
+}
+}
+
+@media(max-width:480px){
+
+.cards,.admin-kpi{
+grid-template-columns:1fr
+}
+
+.auth-form{
+padding:26px
+}
+
+.auth-info{
+padding:26px
+}
+
+.auth-info h1{
+font-size:30px
+}
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     AUTH SCREEN
+========================================================= -->
+
+<div id="authScreen" class="auth-screen">
+
+<div class="auth-card">
+
+<div class="auth-info">
+
+<div class="brand">USMAN STORE DESK</div>
+
+<h1>Your Store.<br>Under Control.</h1>
+
+<p>
+Paid access first. Then create or login to your own private
+store account. Your store data follows your account on every device.
+</p>
+
+<div class="price">Rs. 2999/-</div>
+
+<div class="contact">
+<div>📱 WhatsApp: +92 300 2430058</div>
+<div>☎️ Call: 03223506171</div>
+</div>
+
+</div>
+
+
+<div class="auth-form">
+
+<!-- =========================
+     PAID ACCESS
+========================= -->
+
+<div id="stageAccess">
+
+<h2 style="margin-top:0">Access Store Desk</h2>
+
+<div class="muted">
+Contact the administrator, pay for access, then receive the
+access email + password.
+</div>
+
+<div id="authMsg" class="msg hidden"></div>
+
+<form id="accessForm">
+
+<div class="field">
+<label>Access Email</label>
+<input
+id="accessEmail"
+type="email"
+required
+placeholder="Access email provided by admin"
+autocomplete="username">
+</div>
+
+<div class="field">
+<label>Access Password</label>
+<input
+id="accessPassword"
+type="password"
+required
+placeholder="Access password provided by admin"
+autocomplete="current-password">
+</div>
+
+<button class="btn btn-primary" style="width:100%">
+Verify Paid Access
+</button>
+
+</form>
+
+</div>
+
+
+<!-- =========================================================
+     ADMIN LOGIN
+     Separate screen inside same index.html
+     Opens with index.html#admin
+========================================================= -->
+
+<div id="stageAdmin" class="hidden">
+
+<div class="admin-login-box">
+
+<div class="admin-login-title">
+
+<div class="admin-lock">🔐</div>
+
+<div>
+<h2 style="margin:0">Admin Login</h2>
+<div class="muted">USMAN STORE DESK Owner</div>
+</div>
+
+</div>
+
+<div class="subtle admin-note">
+This login is only for the administrator.
+Customer paid-access credentials cannot be used here.
+</div>
+
+<div id="adminMsg" class="msg hidden"></div>
+
+<form id="adminLoginForm" style="margin-top:18px">
+
+<div class="field">
+<label>Admin Email</label>
+<input
+id="adminEmail"
+type="email"
+required
+placeholder="Admin email"
+autocomplete="username">
+</div>
+
+<div class="field">
+<label>Admin Password</label>
+<input
+id="adminPassword"
+type="password"
+required
+placeholder="Admin password"
+autocomplete="current-password">
+</div>
+
+<button class="btn btn-primary" style="width:100%">
+Open Admin Panel
+</button>
+
+</form>
+
+<button
+id="backFromAdmin"
+class="btn admin-back"
+type="button">
+← Back to Access
+</button>
+
+</div>
+
+</div>
+
+
+<!-- =========================================================
+     CUSTOMER AUTH
+========================================================= -->
+
+<div id="stageCustomer" class="hidden">
+
+<div class="auth-tabs">
+
+<button id="createTab" class="active" type="button">
+Create Account
+</button>
+
+<button id="customerLoginTab" type="button">
+Login
+</button>
+
+</div>
+
+<div id="customerMsg" class="msg hidden"></div>
+
+
+<!-- CREATE -->
+
+<div id="createPanel">
+
+<h2 style="margin-top:0">
+Create Your Store Account
+</h2>
+
+<div class="muted" style="margin-bottom:16px">
+Create this once after receiving paid access.
+Use the same account on your other devices.
+</div>
+
+<form id="createForm">
+
+<div class="field">
+<label>Your Name</label>
+<input id="createName" required placeholder="Your name">
+</div>
+
+<div class="field">
+<label>Your Email</label>
+<input
+id="createEmail"
+type="email"
+required
+placeholder="Your store email">
+</div>
+
+<div class="field">
+<label>Your Password</label>
+<input
+id="createPassword"
+type="password"
+minlength="6"
+required
+placeholder="Minimum 6 characters">
+</div>
+
+<div class="field">
+<label>Confirm Password</label>
+<input
+id="createPassword2"
+type="password"
+minlength="6"
+required
+placeholder="Repeat password">
+</div>
+
+<button class="btn btn-primary" style="width:100%">
+Create My Store Account
+</button>
+
+</form>
+
+</div>
+
+
+<!-- LOGIN -->
+
+<div id="customerLoginPanel" class="hidden">
+
+<h2 style="margin-top:0">
+Login to Your Store
+</h2>
+
+<div class="muted" style="margin-bottom:16px">
+Use the email + password of the store account you created.
+</div>
+
+<form id="customerLoginForm">
+
+<div class="field">
+<label>Email</label>
+<input
+id="customerEmail"
+type="email"
+required
+placeholder="Your store email">
+</div>
+
+<div class="field">
+<label>Password</label>
+<input
+id="customerPassword"
+type="password"
+required
+placeholder="Your store password">
+</div>
+
+<button class="btn btn-primary" style="width:100%">
+Login to My Store
+</button>
+
+</form>
+
+</div>
+
+
+<div class="subtle" style="margin-top:14px">
+<b>No Forgot Password button:</b>
+password resets are handled by the administrator in Firebase,
+as requested.
+</div>
+
+<button
+id="backToAccess"
+class="btn"
+style="margin-top:10px;width:100%">
+← Back to Access
+</button>
+
+</div>
+
+</div>
+</div>
+</div>
+
+
+<!-- =========================================================
+     MAIN APP
+========================================================= -->
+
+<div id="app" class="app hidden">
+
+<aside id="sidebar" class="sidebar">
+
+<div class="side-brand">
+USMAN STORE DESK
+</div>
+
+<div class="nav">
+
+<button class="nav-btn active" data-view="dashboard">
+📊 Dashboard
+</button>
+
+<button class="nav-btn" data-view="products">
+📦 Products
+</button>
+
+<button class="nav-btn" data-view="sales">
+💰 Sales
+</button>
+
+<button class="nav-btn" data-view="expenses">
+💸 Expenses
+</button>
+
+<button class="nav-btn" data-view="settings">
+⚙️ Settings
+</button>
+
+<button
+id="adminNav"
+class="nav-btn hidden"
+data-view="customers">
+👥 Customers
+</button>
+
+</div>
+
+<button
+id="sideLogout"
+class="btn"
+style="width:100%;margin-top:20px">
+🚪 Logout
+</button>
+
+</aside>
+
+
+<main class="main">
+
+<header class="topbar">
+
+<div class="top-left">
+
+<button id="menuToggle" class="menu">
+☰
+</button>
+
+<div id="pageTitle" class="top-title">
+Dashboard
+</div>
+
+</div>
+
+<div class="top-right">
+
+<span id="dateText" class="muted date"></span>
+
+<span id="shopNameTop" class="muted"></span>
+
+<span id="shopAvatar" class="avatar">
+M
+</span>
+
+</div>
+
+</header>
+
+
+<div class="page">
+
+<!-- =========================================================
+     DASHBOARD
+========================================================= -->
+
+<section id="dashboardView" class="view active">
+
+<div class="cards">
+
+<div class="card">
+<div class="stat-label">TODAY SALES</div>
+<div id="todaySales" class="stat-value">Rs 0.00</div>
+</div>
+
+<div class="card">
+<div class="stat-label">TOTAL REVENUE</div>
+<div id="totalRevenue" class="stat-value">Rs 0.00</div>
+</div>
+
+<div class="card">
+<div class="stat-label">PRODUCTS</div>
+<div id="totalProducts" class="stat-value">0</div>
+</div>
+
+<div class="card">
+<div class="stat-label">ITEMS SOLD</div>
+<div id="itemsSold" class="stat-value">0</div>
+</div>
+
+<div class="card">
+<div class="stat-label">NET PROFIT</div>
+<div id="totalProfit" class="stat-value">Rs 0.00</div>
+</div>
+
+</div>
+
+
+<div class="section card">
+
+<div class="section-head">
+<h3>Sales — Last 7 Days</h3>
+</div>
+
+<div id="salesChart" class="chart"></div>
+
+</div>
+
+
+<div
+class="section"
+style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+
+<div class="card">
+
+<div class="section-head">
+<h3>Low Stock</h3>
+</div>
+
+<div id="lowStockList"></div>
+
+</div>
+
+
+<div class="card">
+
+<div class="section-head">
+<h3>Recent Sales</h3>
+</div>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Product</th>
+<th>Qty</th>
+<th>Revenue</th>
+<th>Profit</th>
+<th>Date</th>
+</tr>
+</thead>
+
+<tbody id="recentSalesTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     PRODUCTS
+========================================================= -->
+
+<section id="productsView" class="view">
+
+<div class="section-head">
+
+<div>
+<h2 style="margin:0">Products</h2>
+<div class="muted">
+Manage inventory and prices.
+</div>
+</div>
+
+<button
+class="btn btn-primary"
+onclick="openProductModal()">
++ Add Product
+</button>
+
+</div>
+
+
+<div class="toolbar" style="margin-bottom:12px">
+
+<input
+id="productSearch"
+class="field search"
+style="margin:0"
+placeholder="Search products..."
+oninput="renderProducts()">
+
+</div>
+
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Product</th>
+<th>Category</th>
+<th>Buy</th>
+<th>Sell</th>
+<th>Stock</th>
+<th>Status</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody id="productsTable"></tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     SALES
+========================================================= -->
+
+<section id="salesView" class="view">
+
+<div class="section-head">
+
+<div>
+<h2 style="margin:0">Sales</h2>
+<div id="salesCount" class="muted">
+0 sales
+</div>
+</div>
+
+<button
+class="btn btn-primary"
+onclick="openSaleModal()">
++ Record Sale
+</button>
+
+</div>
+
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Product</th>
+<th>Qty</th>
+<th>Revenue</th>
+<th>Profit</th>
+<th>Payment</th>
+<th>Date</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody id="salesTable"></tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     EXPENSES
+========================================================= -->
+
+<section id="expensesView" class="view">
+
+<div
+class="cards"
+style="grid-template-columns:repeat(3,1fr)">
+
+<div class="card">
+<div class="stat-label">TOTAL EXPENSES</div>
+<div id="totalExpenses" class="stat-value">
+Rs 0.00
+</div>
+</div>
+
+<div class="card">
+<div class="stat-label">THIS MONTH</div>
+<div id="monthExpenses" class="stat-value">
+Rs 0.00
+</div>
+</div>
+
+<div class="card">
+<div class="stat-label">RECORDS</div>
+<div id="expenseCount" class="stat-value">
+0
+</div>
+</div>
+
+</div>
+
+
+<div
+class="section-head"
+style="margin-top:24px">
+
+<div>
+<h2 style="margin:0">Expenses</h2>
+</div>
+
+<button
+class="btn btn-primary"
+onclick="openExpenseModal()">
++ Add Expense
+</button>
+
+</div>
+
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Name</th>
+<th>Category</th>
+<th>Amount</th>
+<th>Date</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody id="expensesTable"></tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     SETTINGS
+========================================================= -->
+
+<section id="settingsView" class="view">
+
+<div class="section-head">
+
+<div>
+<h2 style="margin:0">Settings</h2>
+<div class="muted">
+Shop profile, access and backups.
+</div>
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="settings-grid">
+
+<div class="field">
+<label>Shop Name</label>
+<input id="settingShopName">
+</div>
+
+<div class="field">
+<label>Currency</label>
+
+<select id="settingCurrency">
+<option>Rs </option>
+<option>$</option>
+<option>€</option>
+<option>£</option>
+<option>₨</option>
+</select>
+
+</div>
+
+<div class="field">
+<label>Low Stock Alert At</label>
+<input
+id="settingLowStock"
+type="number"
+min="0">
+</div>
+
+</div>
+
+<button
+class="btn btn-primary"
+onclick="saveSettings()">
+Save Settings
+</button>
+
+</div>
+
+
+<div class="section card">
+
+<div class="section-head">
+<h3>Account</h3>
+</div>
+
+<div class="subtle" id="accountInfo"></div>
+
+<div
+class="toolbar"
+style="margin-top:12px">
+
+<button
+class="btn"
+onclick="logoutAllMyDevices()">
+🚪 Logout All My Devices
+</button>
+
+<div class="subtle">
+Password changes/resets are handled by the administrator in Firebase.
+</div>
+
+</div>
+
+</div>
+
+
+<div class="section card">
+
+<div class="section-head">
+<h3>Backup</h3>
+</div>
+
+<div class="toolbar">
+
+<button
+class="btn"
+onclick="exportData()">
+⬇ Export Backup
+</button>
+
+<label class="btn">
+⬆ Import Backup
+<input
+type="file"
+accept="application/json"
+onchange="importData(event)"
+hidden>
+</label>
+
+<button
+class="btn btn-danger"
+onclick="clearAllData()">
+Reset Store Data
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================================
+     CUSTOMERS / ADMIN
+========================================================= -->
+
+<section id="customersView" class="view">
+
+<div class="section-head">
+
+<div>
+
+<h2 style="margin:0">
+Customers & Access
+</h2>
+
+<div class="muted">
+Admin only. See customer accounts, status,
+devices and activity.
+</div>
+
+</div>
+
+<button
+class="btn"
+onclick="loadCustomers()">
+↻ Refresh
+</button>
+
+</div>
+
+
+<div class="admin-kpi">
+
+<div class="card">
+<div class="stat-label">CUSTOMERS</div>
+<div id="adminCustomerCount" class="stat-value">
+0
+</div>
+</div>
+
+<div class="card">
+<div class="stat-label">APPROVED</div>
+<div id="adminApprovedCount" class="stat-value">
+0
+</div>
+</div>
+
+<div class="card">
+<div class="stat-label">UNAUTHORIZED</div>
+<div id="adminPendingCount" class="stat-value">
+0
+</div>
+</div>
+
+<div class="card">
+<div class="stat-label">BLOCKED</div>
+<div id="adminBlockedCount" class="stat-value">
+0
+</div>
+</div>
+
+</div>
+
+
+<div class="section card">
+
+<div class="section-head">
+
+<h3>Recent Access Activity</h3>
+
+<button
+class="btn"
+onclick="loadAccessLogs()">
+↻ Refresh
+</button>
+
+</div>
+
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Email</th>
+<th>Time</th>
+<th>Device</th>
+</tr>
+</thead>
+
+<tbody id="accessLogsTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<div class="section card">
+
+<div class="section-head">
+<h3>Customer Accounts</h3>
+</div>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Status</th>
+<th>Last Activity</th>
+<th>Shop</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody id="customersTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+</main>
+</div>
+
+
+<!-- =========================================================
+     PRODUCT MODAL
+========================================================= -->
+
+<div class="modal-overlay" id="productModal">
+
+<div class="modal">
+
+<div class="modal-head">
+
+<h3 id="productModalTitle">
+Add Product
+</h3>
+
+<button
+class="close"
+onclick="closeModal('productModal')">
+×
+</button>
+
+</div>
+
+
+<form id="productForm">
+
+<div class="modal-body">
+
+<div class="form-grid">
+
+<div class="field full">
+<label>Product Name</label>
+<input id="productName" required>
+</div>
+
+<div class="field full">
+<label>Category</label>
+<input id="productCategory">
+</div>
+
+<div class="field">
+<label>Stock</label>
+<input
+id="productStock"
+type="number"
+min="0"
+required>
+</div>
+
+<div class="field">
+<label>Buy Price</label>
+<input
+id="productBuy"
+type="number"
+min="0"
+step="0.01"
+required>
+</div>
+
+<div class="field full">
+<label>Sell Price</label>
+<input
+id="productSell"
+type="number"
+min="0"
+step="0.01"
+required>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="modal-foot">
+
+<button
+type="button"
+class="btn"
+onclick="closeModal('productModal')">
+Cancel
+</button>
+
+<button class="btn btn-primary">
+Save Product
+</button>
+
+</div>
+
+</form>
+
+</div>
+</div>
+
+
+<!-- =========================================================
+     SALE MODAL
+========================================================= -->
+
+<div class="modal-overlay" id="saleModal">
+
+<div class="modal">
+
+<div class="modal-head">
+
+<h3>Record Sale</h3>
+
+<button
+class="close"
+onclick="closeModal('saleModal')">
+×
+</button>
+
+</div>
+
+
+<form id="saleForm">
+
+<div class="modal-body">
+
+<div class="form-grid">
+
+<div class="field full">
+
+<label>Product</label>
+
+<select
+id="saleProduct"
+required>
+</select>
+
+</div>
+
+<div class="field">
+
+<label>Quantity</label>
+
+<input
+id="saleQuantity"
+type="number"
+min="1"
+value="1"
+required>
+
+</div>
+
+<div class="field">
+
+<label>Payment Method</label>
+
+<select id="salePayment">
+
+<option>Cash</option>
+<option>Card</option>
+<option>Bank Transfer</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
+<div class="field full">
+
+<label>Discount</label>
+
+<input
+id="saleDiscount"
+type="number"
+min="0"
+step="0.01"
+value="0">
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="modal-foot">
+
+<button
+type="button"
+class="btn"
+onclick="closeModal('saleModal')">
+Cancel
+</button>
+
+<button class="btn btn-primary">
+Record Sale
+</button>
+
+</div>
+
+</form>
+
+</div>
+</div>
+
+
+<!-- =========================================================
+     EXPENSE MODAL
+========================================================= -->
+
+<div class="modal-overlay" id="expenseModal">
+
+<div class="modal">
+
+<div class="modal-head">
+
+<h3>Add Expense</h3>
+
+<button
+class="close"
+onclick="closeModal('expenseModal')">
+×
+</button>
+
+</div>
+
+
+<form id="expenseForm">
+
+<div class="modal-body">
+
+<div class="form-grid">
+
+<div class="field full">
+
+<label>Expense Name</label>
+
+<input
+id="expenseName"
+required
+placeholder="e.g. Shop Rent">
+
+</div>
+
+<div class="field">
+
+<label>Category</label>
+
+<select id="expenseCategory">
+
+<option>Rent</option>
+<option>Electricity</option>
+<option>Salary</option>
+<option>Delivery</option>
+<option>Marketing</option>
+<option>Supplies</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
+<div class="field">
+
+<label>Amount</label>
+
+<input
+id="expenseAmount"
+type="number"
+min="0"
+step="0.01"
+required>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="modal-foot">
+
+<button
+type="button"
+class="btn"
+onclick="closeModal('expenseModal')">
+Cancel
+</button>
+
+<button class="btn btn-primary">
+Save Expense
+</button>
+
+</div>
+
+</form>
+
+</div>
+</div>
+
+
+<!-- =========================================================
+     DEVICE MODAL
+========================================================= -->
+
+<div class="modal-overlay" id="deviceModal">
+
+<div class="modal">
+
+<div class="modal-head">
+
+<h3>Customer Devices</h3>
+
+<button
+class="close"
+onclick="closeModal('deviceModal')">
+×
+</button>
+
+</div>
+
+<div class="modal-body">
+
+<div id="deviceList" class="subtle">
+Loading devices...
+</div>
+
+</div>
+
+<div class="modal-foot">
+
+<button
+class="btn"
+onclick="closeModal('deviceModal')">
+Close
+</button>
+
+</div>
+
+</div>
+</div>
+
+
+<div class="toast" id="toast"></div>
+
+
+<!-- =========================================================
+     FIREBASE + APP JS
+========================================================= -->
+
+<script type="module">
+
+import {
+initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+import {
+getAuth,
+onAuthStateChanged,
+signInWithEmailAndPassword,
+createUserWithEmailAndPassword,
+signOut
+}
+from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+import {
+getFirestore,
+doc,
+getDoc,
+setDoc,
+updateDoc,
+deleteDoc,
+collection,
+addDoc,
+getDocs,
+serverTimestamp,
+writeBatch
+}
+from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+
+/* =========================================================
+   FIREBASE CONFIG
+========================================================= */
+
+const firebaseConfig = {
+apiKey:"AIzaSyBcj0nncSKW4sIVIQZ_wL0L_4vmuWV0JXE",
+authDomain:"usman-store-desk.firebaseapp.com",
+projectId:"usman-store-desk",
+storageBucket:"usman-store-desk.firebasestorage.app",
+messagingSenderId:"905649581904",
+appId:"1:905649581904:web:0eaa40c337a8e56be2c655",
+measurementId:"G-ZKH3ZDZGJK"
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getFirestore(app);
+
+
+/* =========================================================
+   DEFAULT STATE
+========================================================= */
+
+const DEFAULT_STATE = {
+settings:{
+shopName:"My Store",
+currency:"Rs ",
+lowStock:5
+},
+products:[],
+sales:[],
+expenses:[]
+};
+
+
+let state = structuredClone(DEFAULT_STATE);
+
+let editingProductId = null;
+
+let currentUser = null;
+
+let currentProfile = null;
+
+let currentSessionId = null;
+
+let isAdmin = false;
+
+let accessUnlocked = false;
+
+let accessUid = null;
+
+let accessAuthInProgress = false;
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+const $ = id => document.getElementById(id);
+
+const uid = () =>
+Date.now().toString(36) +
+Math.random().toString(36).slice(2,8);
+
+
+const todayISO = () =>
+new Date().toISOString().slice(0,10);
+
+
+function money(v){
+
+const n = Number(v) || 0;
+
+return (
+state.settings.currency || "Rs "
+) +
+n.toLocaleString(undefined,{
+minimumFractionDigits:2,
+maximumFractionDigits:2
+});
+
+}
+
+
+function formatDate(v){
+
+if(!v)return "—";
+
+const d = v?.toDate ? v.toDate() : new Date(v);
+
+return isNaN(d)
+? "—"
+: d.toLocaleDateString(undefined,{
+day:"2-digit",
+month:"short",
+year:"numeric"
+});
+
+}
+
+
+function dateTime(v){
+
+if(!v)return "—";
+
+const d = v?.toDate ? v.toDate() : new Date(v);
+
+return isNaN(d)
+? "—"
+: d.toLocaleString(undefined,{
+day:"2-digit",
+month:"short",
+hour:"2-digit",
+minute:"2-digit"
+});
+
+}
+
+
+function esc(v){
+
+return String(v ?? "").replace(
+/[&<>"']/g,
+m => ({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+}[m])
+);
+
+}
+
+
+function toast(m){
+
+const t = $("toast");
+
+t.textContent = m;
+
+t.classList.add("show");
+
+clearTimeout(window.__tt);
+
+window.__tt = setTimeout(
+() => t.classList.remove("show"),
+2600
+);
+
+}
+
+
+function msg(id,m,type=""){
+
+const e = $(id);
+
+e.textContent = m;
+
+e.className = "msg " + type;
+
+e.classList.remove("hidden");
+
+}
+
+
+function clearMsg(id){
+
+$(id).classList.add("hidden");
+
+}
+
+
+function firebaseError(e){
+
+const m = {
+
+"auth/invalid-credential":
+"Email or password is incorrect.",
+
+"auth/email-already-in-use":
+"An account with this email already exists.",
+
+"auth/weak-password":
+"Password must be at least 6 characters.",
+
+"auth/invalid-email":
+"Please enter a valid email.",
+
+"auth/too-many-requests":
+"Too many attempts. Try again later.",
+
+"auth/user-disabled":
+"This account has been disabled.",
+
+"auth/network-request-failed":
+"Network error. Check your internet connection."
+
+};
+
+return m[e?.code] ||
+e?.message ||
+"Something went wrong.";
+
+}
+
+
+function deviceInfo(){
+
+return {
+userAgent:navigator.userAgent,
+platform:navigator.platform || "",
+language:navigator.language || "",
+screen:`${screen.width}x${screen.height}`,
+touch:navigator.maxTouchPoints || 0
+};
+
+}
+
+
+function sessionKey(){
+
+return `usman_session_${currentUser?.uid || "x"}`;
+
+}
+
+
+/* =========================================================
+   ADMIN HASH ROUTING
+========================================================= */
+
+function showAdminScreen(){
+
+$("stageAccess").classList.add("hidden");
+
+$("stageCustomer").classList.add("hidden");
+
+$("stageAdmin").classList.remove("hidden");
+
+clearMsg("adminMsg");
+
+$("adminEmail").focus();
+
+}
+
+
+function showAccessScreen(){
+
+$("stageAdmin").classList.add("hidden");
+
+$("stageCustomer").classList.add("hidden");
+
+$("stageAccess").classList.remove("hidden");
+
+clearMsg("adminMsg");
+
+clearMsg("authMsg");
+
+}
+
+
+function handleAuthRoute(){
+
+if(
+window.location.hash.toLowerCase() === "#admin"
+){
+
+showAdminScreen();
+
+}else{
+
+showAccessScreen();
+
+}
+
+}
+
+
+window.addEventListener(
+"hashchange",
+handleAuthRoute
+);
+
+
+/* =========================================================
+   ADMIN LOGIN
+========================================================= */
+
+$("adminLoginForm").addEventListener(
+"submit",
+async e => {
+
+e.preventDefault();
+
+clearMsg("adminMsg");
+
+const email =
+$("adminEmail").value.trim().toLowerCase();
+
+const password =
+$("adminPassword").value;
+
+try{
+
+const cred =
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+const snap =
+await getDoc(
+doc(db,"users",cred.user.uid)
+);
+
+if(
+!snap.exists() ||
+snap.data().role !== "admin"
+){
+
+await signOut(auth);
+
+msg(
+"adminMsg",
+"This account is not an administrator.",
+"error"
+);
+
+return;
+
+}
+
+/*
+  onAuthStateChanged will finish
+  the admin login and open the app.
+*/
+
+}catch(err){
+
+msg(
+"adminMsg",
+firebaseError(err),
+"error"
+);
+
+}
+
+}
+);
+
+
+/* =========================================================
+   BACK FROM ADMIN
+========================================================= */
+
+$("backFromAdmin").onclick =
+async () => {
+
+try{
+await signOut(auth);
+}catch{}
+
+window.location.hash = "";
+
+showAccessScreen();
+
+$("adminLoginForm").reset();
+
+};
+
+
+/* =========================================================
+   PAID ACCESS GATE
+========================================================= */
+
+$("accessForm").addEventListener(
+"submit",
+async e => {
+
+e.preventDefault();
+
+clearMsg("authMsg");
+
+const email =
+$("accessEmail").value.trim().toLowerCase();
+
+const password =
+$("accessPassword").value;
+
+accessAuthInProgress = true;
+
+try{
+
+const cred =
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+const u = cred.user;
+
+const us =
+await getDoc(
+doc(db,"users",u.uid)
+);
+
+if(
+!us.exists() ||
+us.data().role !== "access" ||
+us.data().status !== "approved"
+){
+
+await signOut(auth);
+
+accessAuthInProgress = false;
+
+msg(
+"authMsg",
+"These are not valid paid-access credentials.",
+"error"
+);
+
+return;
+
+}
+
+
+await addDoc(
+collection(db,"accessLogs"),
+{
+accessUid:u.uid,
+email,
+verifiedAt:serverTimestamp(),
+device:deviceInfo()
+}
+);
+
+
+accessUnlocked = true;
+
+accessUid = u.uid;
+
+await signOut(auth);
+
+accessAuthInProgress = false;
+
+$("stageAccess").classList.add("hidden");
+
+$("stageCustomer").classList.remove("hidden");
+
+clearMsg("customerMsg");
+
+toast("Paid access verified.");
+
+}catch(err){
+
+accessAuthInProgress = false;
+
+try{
+await signOut(auth);
+}catch{}
+
+msg(
+"authMsg",
+firebaseError(err),
+"error"
+);
+
+}
+
+}
+);
+
+
+/* =========================================================
+   CUSTOMER TABS
+========================================================= */
+
+$("createTab").onclick = () => {
+
+$("createTab").classList.add("active");
+
+$("customerLoginTab").classList.remove("active");
+
+$("createPanel").classList.remove("hidden");
+
+$("customerLoginPanel").classList.add("hidden");
+
+clearMsg("customerMsg");
+
+};
+
+
+$("customerLoginTab").onclick = () => {
+
+if(!accessUnlocked)return;
+
+$("customerLoginTab").classList.add("active");
+
+$("createTab").classList.remove("active");
+
+$("customerLoginPanel").classList.remove("hidden");
+
+$("createPanel").classList.add("hidden");
+
+clearMsg("customerMsg");
+
+};
+
+
+/* =========================================================
+   BACK TO ACCESS
+========================================================= */
+
+$("backToAccess").onclick =
+async () => {
+
+accessUnlocked = false;
+
+accessUid = null;
+
+await signOut(auth);
+
+window.location.hash = "";
+
+$("stageCustomer").classList.add("hidden");
+
+$("stageAdmin").classList.add("hidden");
+
+$("stageAccess").classList.remove("hidden");
+
+$("accessForm").reset();
+
+clearMsg("authMsg");
+
+clearMsg("customerMsg");
+
+};
+
+
+/* =========================================================
+   CREATE CUSTOMER ACCOUNT
+========================================================= */
+
+$("createForm").addEventListener(
+"submit",
+async e => {
+
+e.preventDefault();
+
+if(!accessUnlocked){
+
+return msg(
+"customerMsg",
+"Verify paid access first.",
+"error"
+);
+
+}
+
+clearMsg("customerMsg");
+
+const name =
+$("createName").value.trim();
+
+const email =
+$("createEmail").value.trim().toLowerCase();
+
+const p1 =
+$("createPassword").value;
+
+const p2 =
+$("createPassword2").value;
+
+
+if(p1 !== p2){
+
+return msg(
+"customerMsg",
+"Passwords do not match.",
+"error"
+);
+
+}
+
+
+if(p1.length < 6){
+
+return msg(
+"customerMsg",
+"Password must be at least 6 characters.",
+"error"
+);
+
+}
+
+
+try{
+
+const cred =
+await createUserWithEmailAndPassword(
+auth,
+email,
+p1
+);
+
+
+await setDoc(
+doc(db,"users",cred.user.uid),
+{
+name,
+email,
+role:"customer",
+status:"approved",
+createdAt:serverTimestamp(),
+lastActivity:serverTimestamp(),
+shopName:"My Store",
+accessVerifiedAt:serverTimestamp(),
+accessVerifiedBy:accessUid
+}
+);
+
+
+await setDoc(
+doc(db,"stores",cred.user.uid),
+{
+settings:DEFAULT_STATE.settings,
+createdAt:serverTimestamp()
+}
+);
+
+
+toast(
+"Account created. Opening your store..."
+);
+
+}catch(err){
+
+msg(
+"customerMsg",
+firebaseError(err),
+"error"
+);
+
+}
+
+}
+);
+
+
+/* =========================================================
+   CUSTOMER LOGIN
+========================================================= */
+
+$("customerLoginForm").addEventListener(
+"submit",
+async e => {
+
+e.preventDefault();
+
+if(!accessUnlocked){
+
+return msg(
+"customerMsg",
+"Verify paid access first.",
+"error"
+);
+
+}
+
+clearMsg("customerMsg");
+
+try{
+
+await signInWithEmailAndPassword(
+auth,
+$("customerEmail").value.trim().toLowerCase(),
+$("customerPassword").value
+);
+
+}catch(err){
+
+msg(
+"customerMsg",
+firebaseError(err),
+"error"
+);
+
+}
+
+}
+);
+
+
+/* =========================================================
+   AUTH STATE
+========================================================= */
+
+onAuthStateChanged(
+auth,
+async user => {
+
+if(!user)return;
+
+currentUser = user;
+
+try{
+
+const ref =
+doc(db,"users",user.uid);
+
+const snap =
+await getDoc(ref);
+
+
+if(!snap.exists()){
+
+await signOut(auth);
+
+return;
+
+}
+
+
+currentProfile = snap.data();
+
+isAdmin =
+currentProfile.role === "admin";
+
+
+/* ACCESS ACCOUNT SHOULD NEVER OPEN APP */
+
+if(currentProfile.role === "access"){
+
+if(!accessAuthInProgress){
+
+await signOut(auth);
+
+}
+
+return;
+
+}
+
+
+/* CUSTOMER MUST VERIFY PAID ACCESS */
+
+if(
+!isAdmin &&
+!accessUnlocked
+){
+
+await signOut(auth);
+
+msg(
+"authMsg",
+"Paid access must be verified before customer login.",
+"error"
+);
+
+return;
+
+}
+
+
+/* BLOCKED ACCOUNT */
+
+if(
+currentProfile.status === "blocked"
+){
+
+await signOut(auth);
+
+msg(
+"customerMsg",
+"This account is blocked by the administrator.",
+"error"
+);
+
+return;
+
+}
+
+
+/* CUSTOMER STATUS */
+
+if(
+!isAdmin &&
+currentProfile.status !== "approved"
+){
+
+await signOut(auth);
+
+msg(
+"customerMsg",
+"This account is not approved.",
+"error"
+);
+
+return;
+
+}
+
+
+/* UPDATE LAST ACTIVITY */
+
+await updateDoc(
+ref,
+{
+lastActivity:serverTimestamp()
+}
+).catch(()=>{});
+
+
+/* START SESSION */
+
+await startSession();
+
+
+/* LOAD STORE */
+
+await loadStore();
+
+
+/* OPEN APP */
+
+$("authScreen").classList.add("hidden");
+
+$("app").classList.remove("hidden");
+
+$("adminNav").classList.toggle(
+"hidden",
+!isAdmin
+);
+
+
+$("accountInfo").innerHTML = `
+<b>${esc(currentProfile.name || "Customer")}</b><br>
+${esc(currentProfile.email || user.email || "")}<br>
+Role: ${esc(currentProfile.role || "customer")}
+· Status: ${esc(currentProfile.status || "approved")}<br>
+<span class="muted">
+One private Store Desk shop is linked to this account.
+</span>
+`;
+
+
+renderHeader();
+
+renderDashboard();
+
+renderProducts();
+
+renderSales();
+
+renderExpenses();
+
+renderSettings();
+
+
+if(isAdmin){
+
+loadCustomers();
+
+loadAccessLogs();
+
+}
+
+}catch(err){
+
+console.error(err);
+
+await signOut(auth);
+
+if(isAdmin){
+
+msg(
+"adminMsg",
+"Could not load the admin account. Check Firebase/Firestore setup.",
+"error"
+);
+
+}else{
+
+msg(
+"customerMsg",
+"Could not load the account. Check Firebase/Firestore setup.",
+"error"
+);
+
+}
+
+}
+
+}
+);
+
+
+/* =========================================================
+   SESSION
+========================================================= */
+
+async function startSession(){
+
+currentSessionId = uid();
+
+await setDoc(
+doc(
+db,
+"users",
+currentUser.uid,
+"sessions",
+currentSessionId
+),
+{
+active:true,
+createdAt:serverTimestamp(),
+lastSeen:serverTimestamp(),
+device:deviceInfo()
+}
+);
+
+
+localStorage.setItem(
+sessionKey(),
+currentSessionId
+);
+
+
+clearInterval(window.__heartbeat);
+
+clearInterval(window.__accessCheck);
+
+
+window.__heartbeat =
+setInterval(
+async () => {
+
+if(
+currentUser &&
+currentSessionId
+){
+
+try{
+
+await updateDoc(
+doc(
+db,
+"users",
+currentUser.uid,
+"sessions",
+currentSessionId
+),
+{
+lastSeen:serverTimestamp()
+}
+);
+
+}catch{}
+
+}
+
+},
+60000
+);
+
+
+window.__accessCheck =
+setInterval(
+checkAccess,
+30000
+);
+
+}
+
+
+/* =========================================================
+   ACCESS CHECK
+========================================================= */
+
+async function checkAccess(){
+
+if(!currentUser)return;
+
+try{
+
+const u =
+await getDoc(
+doc(db,"users",currentUser.uid)
+);
+
+const s =
+await getDoc(
+doc(
+db,
+"users",
+currentUser.uid,
+"sessions",
+currentSessionId
+)
+);
+
+
+if(
+!u.exists() ||
+u.data().status === "blocked" ||
+(
+!isAdmin &&
+u.data().status !== "approved"
+) ||
+!s.exists() ||
+s.data().active !== true
+){
+
+await logout(false);
+
+}
+
+}catch{}
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logout(show=true){
+
+try{
+
+if(
+currentUser &&
+currentSessionId
+){
+
+await updateDoc(
+doc(
+db,
+"users",
+currentUser.uid,
+"sessions",
+currentSessionId
+),
+{
+active:false,
+loggedOutAt:serverTimestamp()
+}
+);
+
+}
+
+}catch{}
+
+
+clearInterval(window.__heartbeat);
+
+clearInterval(window.__accessCheck);
+
+
+currentUser = null;
+
+currentProfile = null;
+
+currentSessionId = null;
+
+isAdmin = false;
+
+accessUnlocked = false;
+
+accessUid = null;
+
+
+await signOut(auth);
+
+
+$("app").classList.add("hidden");
+
+$("authScreen").classList.remove("hidden");
+
+
+$("stageCustomer").classList.add("hidden");
+
+$("stageAdmin").classList.add("hidden");
+
+$("stageAccess").classList.remove("hidden");
+
+
+if(show){
+
+toast("Logged out.");
+
+}
+
+}
+
+
+$("sideLogout").onclick =
+() => logout(true);
+
+
+/* =========================================================
+   STORE
+========================================================= */
+
+async function loadStore(){
+
+const ref =
+doc(db,"stores",currentUser.uid);
+
+const snap =
+await getDoc(ref);
+
+
+if(snap.exists()){
+
+const d = snap.data();
+
+state = {
+...structuredClone(DEFAULT_STATE),
+...d,
+settings:{
+...DEFAULT_STATE.settings,
+...(d.settings || {})
+}
+};
+
+}else{
+
+state =
+structuredClone(DEFAULT_STATE);
+
+await setDoc(
+ref,
+{
+settings:state.settings,
+createdAt:serverTimestamp()
+}
+);
+
+}
+
+
+for(
+const key of
+["products","sales","expenses"]
+){
+
+const qs =
+await getDocs(
+collection(
+db,
+"stores",
+currentUser.uid,
+key
+)
+);
+
+state[key] =
+qs.docs.map(
+x => ({
+id:x.id,
+...x.data()
+})
+);
+
+}
+
+}
+
+
+const storeDoc =
+() =>
+doc(
+db,
+"stores",
+currentUser.uid
+);
+
+
+async function saveSettingsCloud(){
+
+await updateDoc(
+storeDoc(),
+{
+settings:state.settings,
+updatedAt:serverTimestamp()
+}
+);
+
+}
+
+
+async function addCloud(type,data){
+
+return (
+await addDoc(
+collection(
+db,
+"stores",
+currentUser.uid,
+type
+),
+data
+)
+).id;
+
+}
+
+
+async function updateCloud(type,id,data){
+
+await updateDoc(
+doc(
+db,
+"stores",
+currentUser.uid,
+type,
+id
+),
+data
+);
+
+}
+
+
+async function deleteCloud(type,id){
+
+await deleteDoc(
+doc(
+db,
+"stores",
+currentUser.uid,
+type,
+id
+)
+);
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+const viewNames = {
+dashboard:"Dashboard",
+products:"Products",
+sales:"Sales",
+expenses:"Expenses",
+settings:"Settings",
+customers:"Customers"
+};
+
+
+function switchView(name){
+
+document
+.querySelectorAll(".view")
+.forEach(
+v => v.classList.remove("active")
+);
+
+
+$(name + "View")
+?.classList.add("active");
+
+
+document
+.querySelectorAll(".nav-btn")
+.forEach(
+b =>
+b.classList.toggle(
+"active",
+b.dataset.view === name
+)
+);
+
+
+$("pageTitle").textContent =
+viewNames[name] || "Dashboard";
+
+
+closeSidebar();
+
+
+if(name === "dashboard")
+renderDashboard();
+
+if(name === "products")
+renderProducts();
+
+if(name === "sales")
+renderSales();
+
+if(name === "expenses")
+renderExpenses();
+
+if(name === "settings")
+renderSettings();
+
+if(
+name === "customers" &&
+isAdmin
+)
+loadCustomers();
+
+}
+
+
+document
+.querySelectorAll(".nav-btn")
+.forEach(
+b =>
+b.onclick =
+() => switchView(b.dataset.view)
+);
+
+
+$("menuToggle").onclick =
+() =>
+$("sidebar").classList.toggle("open");
+
+
+function closeSidebar(){
+
+$("sidebar").classList.remove("open");
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+function renderHeader(){
+
+const n =
+state.settings.shopName ||
+"My Store";
+
+
+$("shopNameTop").textContent = n;
+
+$("shopAvatar").textContent =
+n.charAt(0).toUpperCase();
+
+
+$("dateText").textContent =
+new Date().toLocaleDateString(
+undefined,
+{
+weekday:"short",
+day:"numeric",
+month:"short"
+}
+);
+
+}
+
+
+/* =========================================================
+   PRODUCTS
+========================================================= */
+
+function getProduct(id){
+
+return state.products.find(
+p => p.id === id
+);
+
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function renderDashboard(){
+
+const today =
+todayISO();
+
+
+const ts =
+state.sales
+.filter(
+s =>
+String(s.date).slice(0,10) === today
+)
+.reduce(
+(a,s) =>
+a + Number(s.revenue),
+0
+);
+
+
+const rev =
+state.sales.reduce(
+(a,s) =>
+a + Number(s.revenue),
+0
+);
+
+
+const items =
+state.sales.reduce(
+(a,s) =>
+a + Number(s.quantity),
+0
+);
+
+
+const profit =
+state.sales.reduce(
+(a,s) =>
+a + Number(s.profit),
+0
+);
+
+
+const exp =
+state.expenses.reduce(
+(a,e) =>
+a + Number(e.amount),
+0
+);
+
+
+$("todaySales").textContent =
+money(ts);
+
+
+$("totalRevenue").textContent =
+money(rev);
+
+
+$("totalProducts").textContent =
+state.products.length;
+
+
+$("itemsSold").textContent =
+items;
+
+
+$("totalProfit").textContent =
+money(profit - exp);
+
+
+renderChart();
+
+renderLowStock();
+
+renderRecentSales();
+
+}
+
+
+/* =========================================================
+   CHART
+========================================================= */
+
+function renderChart(){
+
+const days = [];
+
+
+for(let i=6;i>=0;i--){
+
+const d = new Date();
+
+d.setHours(0,0,0,0);
+
+d.setDate(
+d.getDate() - i
+);
+
+
+const iso =
+d.toISOString().slice(0,10);
+
+
+const total =
+state.sales
+.filter(
+s =>
+String(s.date).slice(0,10) === iso
+)
+.reduce(
+(a,s) =>
+a + Number(s.revenue),
+0
+);
+
+
+days.push({
+label:
+d.toLocaleDateString(
+undefined,
+{
+weekday:"short"
+}
+).slice(0,3),
+total
+});
+
+}
+
+
+const max =
+Math.max(
+...days.map(x => x.total),
+1
+);
+
+
+$("salesChart").innerHTML =
+days.map(
+x => `
+<div class="bar-wrap">
+
+<div
+class="bar"
+style="height:${Math.max(
+x.total / max * 85,
+3
+)}%">
+</div>
+
+<div class="bar-label">
+${x.label}
+</div>
+
+</div>
+`
+).join("");
+
+}
+
+
+/* =========================================================
+   LOW STOCK
+========================================================= */
+
+function renderLowStock(){
+
+const low =
+state.products
+.filter(
+p =>
+Number(p.stock) <=
+Number(state.settings.lowStock)
+)
+.sort(
+(a,b) =>
+Number(a.stock) -
+Number(b.stock)
+)
+.slice(0,6);
+
+
+$("lowStockList").innerHTML =
+low.length
+
+? low.map(
+p => `
+<div
+style="
+display:flex;
+justify-content:space-between;
+padding:11px 0;
+border-bottom:1px solid var(--line)
+">
+
+<div>
+
+<div class="product-name">
+${esc(p.name)}
+</div>
+
+<div
+class="muted"
+style="font-size:11px">
+
+${esc(
+p.category ||
+"Uncategorized"
+)}
+
+</div>
+
+</div>
+
+${
+Number(p.stock) === 0
+
+? '<span class="badge badge-red">Out</span>'
+
+: `<span class="badge badge-yellow">
+${p.stock} left
+</span>`
+}
+
+</div>
+`
+).join("")
+
+: `
+<div class="empty">
+Everything looks good.<br>
+No low-stock products.
+</div>
+`;
+
+}
+
+
+/* =========================================================
+   RECENT SALES
+========================================================= */
+
+function renderRecentSales(){
+
+const recent =
+[...state.sales]
+.sort(
+(a,b) =>
+new Date(b.date) -
+new Date(a.date)
+)
+.slice(0,7);
+
+
+$("recentSalesTable").innerHTML =
+recent.length
+
+? recent.map(
+s => `
+<tr>
+
+<td>
+<div class="product-name">
+${esc(s.productName)}
+</div>
+</td>
+
+<td>${s.quantity}</td>
+
+<td>${money(s.revenue)}</td>
+
+<td>${money(s.profit)}</td>
+
+<td class="muted">
+${formatDate(s.date)}
+</td>
+
+</tr>
+`
+).join("")
+
+: `
+<tr>
+<td colspan="5">
+<div class="empty">
+No sales recorded yet.
+</div>
+</td>
+</tr>
+`;
+
+}
+
+
+/* =========================================================
+   PRODUCT LIST
+========================================================= */
+
+function renderProducts(){
+
+const q =
+$("productSearch").value
+.trim()
+.toLowerCase();
+
+
+const products =
+state.products.filter(
+p =>
+(p.name || "")
+.toLowerCase()
+.includes(q) ||
+(p.category || "")
+.toLowerCase()
+.includes(q)
+);
+
+
+const tbody =
+$("productsTable");
+
+
+if(!products.length){
+
+tbody.innerHTML = `
+<tr>
+<td colspan="7">
+<div class="empty">
+${
+state.products.length
+? "No matching products."
+: "No products yet. Add your first product."
+}
+</div>
+</td>
+</tr>
+`;
+
+return;
+
+}
+
+
+tbody.innerHTML =
+products.map(
+p => {
+
+const stock =
+Number(p.stock);
+
+
+const badge =
+stock === 0
+
+? '<span class="badge badge-red">Out of stock</span>'
+
+: stock <=
+Number(state.settings.lowStock)
+
+? '<span class="badge badge-yellow">Low stock</span>'
+
+: '<span class="badge badge-green">In stock</span>';
+
+
+return `
+<tr>
+
+<td>
+<div class="product-name">
+${esc(p.name)}
+</div>
+</td>
+
+<td class="muted">
+${esc(p.category || "—")}
+</td>
+
+<td>${money(p.buy)}</td>
+
+<td>${money(p.sell)}</td>
+
+<td>${stock}</td>
+
+<td>${badge}</td>
+
+<td>
+
+<button
+class="btn btn-small"
+onclick="editProduct('${p.id}')">
+Edit
+</button>
+
+<button
+class="btn btn-small btn-danger"
+onclick="deleteProduct('${p.id}')">
+Delete
+</button>
+
+</td>
+
+</tr>
+`;
+
+}
+).join("");
+
+}
+
+
+/* =========================================================
+   PRODUCT MODAL
+========================================================= */
+
+window.openProductModal =
+id => {
+
+editingProductId =
+id || null;
+
+
+$("productForm").reset();
+
+
+$("productModalTitle").textContent =
+id
+? "Edit Product"
+: "Add Product";
+
+
+if(id){
+
+const p =
+getProduct(id);
+
+if(!p)return;
+
+
+$("productName").value =
+p.name;
+
+$("productCategory").value =
+p.category || "";
+
+$("productStock").value =
+p.stock;
+
+$("productBuy").value =
+p.buy;
+
+$("productSell").value =
+p.sell;
+
+}
+
+
+$("productModal")
+.classList.add("open");
+
+};
+
+
+window.editProduct =
+id =>
+openProductModal(id);
+
+
+window.deleteProduct =
+async id => {
+
+const p =
+getProduct(id);
+
+
+if(
+!p ||
+!confirm(
+`Delete "${p.name}"?`
+)
+)return;
+
+
+await deleteCloud(
+"products",
+id
+);
+
+
+state.products =
+state.products.filter(
+x => x.id !== id
+);
+
+
+renderProducts();
+
+renderDashboard();
+
+toast("Product deleted.");
+
+};
+
+
+/* =========================================================
+   SAVE PRODUCT
+========================================================= */
+
+$("productForm").onsubmit =
+async e => {
+
+e.preventDefault();
+
+
+const data = {
+
+name:
+$("productName").value.trim(),
+
+category:
+$("productCategory").value.trim(),
+
+stock:
+Number($("productStock").value),
+
+buy:
+Number($("productBuy").value),
+
+sell:
+Number($("productSell").value)
+
+};
+
+
+if(!data.name){
+
+return toast(
+"Please enter a product name."
+);
+
+}
+
+
+if(editingProductId){
+
+await updateCloud(
+"products",
+editingProductId,
+data
+);
+
+
+Object.assign(
+getProduct(editingProductId),
+data
+);
+
+
+toast("Product updated.");
+
+}else{
+
+const id =
+await addCloud(
+"products",
+{
+...data,
+createdAt:serverTimestamp()
+}
+);
+
+
+state.products.push({
+id,
+...data
+});
+
+
+toast("Product added.");
+
+}
+
+
+closeModal("productModal");
+
+renderProducts();
+
+renderDashboard();
+
+};
+
+
+/* =========================================================
+   SALE MODAL
+========================================================= */
+
+window.openSaleModal =
+async () => {
+
+const a =
+state.products.filter(
+p =>
+Number(p.stock) > 0
+);
+
+
+if(!a.length){
+
+toast(
+"Add an in-stock product first."
+);
+
+switchView("products");
+
+return;
+
+}
+
+
+$("saleProduct").innerHTML =
+a.map(
+p =>
+`
+<option value="${p.id}">
+${esc(p.name)}
+— ${money(p.sell)}
+— ${p.stock} in stock
+</option>
+`
+).join("");
+
+
+$("saleQuantity").value = 1;
+
+$("saleDiscount").value = 0;
+
+$("salePayment").value = "Cash";
+
+
+$("saleModal")
+.classList.add("open");
+
+};
+
+
+/* =========================================================
+   RECORD SALE
+========================================================= */
+
+$("saleForm").onsubmit =
+async e => {
+
+e.preventDefault();
+
+
+const p =
+getProduct(
+$("saleProduct").value
+);
+
+
+const q =
+Number(
+$("saleQuantity").value
+);
+
+
+const discount =
+Number(
+$("saleDiscount").value
+) || 0;
+
+
+const payment =
+$("salePayment").value;
+
+
+if(!p){
+
+return toast(
+"Product not found."
+);
+
+}
+
+
+if(
+q <= 0 ||
+q > Number(p.stock)
+){
+
+return toast(
+`Only ${p.stock} units available.`
+);
+
+}
+
+
+const revenue =
+Math.max(
+Number(p.sell) * q -
+discount,
+0
+);
+
+
+const cost =
+Number(p.buy) * q;
+
+
+const profit =
+revenue - cost;
+
+
+p.stock -= q;
+
+
+await updateCloud(
+"products",
+p.id,
+{
+stock:p.stock
+}
+);
+
+
+const sale = {
+
+productId:p.id,
+
+productName:p.name,
+
+quantity:q,
+
+discount,
+
+revenue,
+
+cost,
+
+profit,
+
+payment,
+
+date:new Date().toISOString()
+
+};
+
+
+const id =
+await addCloud(
+"sales",
+sale
+);
+
+
+state.sales.push({
+id,
+...sale
+});
+
+
+closeModal("saleModal");
+
+renderDashboard();
+
+renderProducts();
+
+renderSales();
+
+toast(
+"Sale recorded successfully."
+);
+
+};
+
+
+/* =========================================================
+   SALES LIST
+========================================================= */
+
+function renderSales(){
+
+const s =
+[...state.sales]
+.sort(
+(a,b) =>
+new Date(b.date) -
+new Date(a.date)
+);
+
+
+$("salesCount").textContent =
+`${s.length} ${
+s.length === 1
+? "sale"
+: "sales"
+}`;
+
+
+$("salesTable").innerHTML =
+s.length
+
+? s.map(
+x => `
+<tr>
+
+<td>
+<div class="product-name">
+${esc(x.productName)}
+</div>
+</td>
+
+<td>${x.quantity}</td>
+
+<td>${money(x.revenue)}</td>
+
+<td>${money(x.profit)}</td>
+
+<td>
+<span class="badge badge-green">
+${esc(x.payment)}
+</span>
+</td>
+
+<td class="muted">
+${formatDate(x.date)}
+</td>
+
+<td>
+
+<button
+class="btn btn-small btn-danger"
+onclick="deleteSale('${x.id}')">
+Delete
+</button>
+
+</td>
+
+</tr>
+`
+).join("")
+
+: `
+<tr>
+<td colspan="7">
+<div class="empty">
+No sales recorded yet.
+</div>
+</td>
+</tr>
+`;
+
+}
+
+
+/* =========================================================
+   DELETE SALE
+========================================================= */
+
+window.deleteSale =
+async id => {
+
+const s =
+state.sales.find(
+x => x.id === id
+);
+
+
+if(
+!s ||
+!confirm(
+"Delete this sale? The quantity will be returned to stock."
+)
+)return;
+
+
+const p =
+getProduct(s.productId);
+
+
+if(p){
+
+p.stock +=
+Number(s.quantity);
+
+
+await updateCloud(
+"products",
+p.id,
+{
+stock:p.stock
+}
+);
+
+}
+
+
+await deleteCloud(
+"sales",
+id
+);
+
+
+state.sales =
+state.sales.filter(
+x => x.id !== id
+);
+
+
+renderSales();
+
+renderProducts();
+
+renderDashboard();
+
+toast(
+"Sale deleted and stock restored."
+);
+
+};
+
+
+/* =========================================================
+   EXPENSE
+========================================================= */
+
+window.openExpenseModal =
+() => {
+
+$("expenseForm").reset();
+
+$("expenseModal")
+.classList.add("open");
+
+};
+
+
+$("expenseForm").onsubmit =
+async e => {
+
+e.preventDefault();
+
+
+const name =
+$("expenseName")
+.value.trim();
+
+
+const category =
+$("expenseCategory").value;
+
+
+const amount =
+Number(
+$("expenseAmount").value
+);
+
+
+if(
+!name ||
+amount <= 0
+){
+
+return toast(
+"Enter a valid expense."
+);
+
+}
+
+
+const data = {
+
+name,
+
+category,
+
+amount,
+
+date:new Date().toISOString()
+
+};
+
+
+const id =
+await addCloud(
+"expenses",
+data
+);
+
+
+state.expenses.push({
+id,
+...data
+});
+
+
+closeModal("expenseModal");
+
+renderExpenses();
+
+renderDashboard();
+
+toast("Expense added.");
+
+};
+
+
+/* =========================================================
+   EXPENSE LIST
+========================================================= */
+
+function renderExpenses(){
+
+const a =
+[...state.expenses]
+.sort(
+(x,y) =>
+new Date(y.date) -
+new Date(x.date)
+);
+
+
+const total =
+a.reduce(
+(s,e) =>
+s + Number(e.amount),
+0
+);
+
+
+const month =
+new Date()
+.toISOString()
+.slice(0,7);
+
+
+const mt =
+a.filter(
+e =>
+String(e.date)
+.slice(0,7) === month
+)
+.reduce(
+(s,e) =>
+s + Number(e.amount),
+0
+);
+
+
+$("totalExpenses").textContent =
+money(total);
+
+
+$("monthExpenses").textContent =
+money(mt);
+
+
+$("expenseCount").textContent =
+`${a.length} ${
+a.length === 1
+? "expense"
+: "expenses"
+}`;
+
+
+$("expensesTable").innerHTML =
+a.length
+
+? a.map(
+e => `
+<tr>
+
+<td>
+<div class="product-name">
+${esc(e.name)}
+</div>
+</td>
+
+<td class="muted">
+${esc(e.category)}
+</td>
+
+<td>${money(e.amount)}</td>
+
+<td class="muted">
+${formatDate(e.date)}
+</td>
+
+<td>
+
+<button
+class="btn btn-small btn-danger"
+onclick="deleteExpense('${e.id}')">
+Delete
+</button>
+
+</td>
+
+</tr>
+`
+).join("")
+
+: `
+<tr>
+<td colspan="5">
+<div class="empty">
+No expenses recorded yet.
+</div>
+</td>
+</tr>
+`;
+
+}
+
+
+/* =========================================================
+   DELETE EXPENSE
+========================================================= */
+
+window.deleteExpense =
+async id => {
+
+if(
+!confirm(
+"Delete this expense?"
+)
+)return;
+
+
+await deleteCloud(
+"expenses",
+id
+);
+
+
+state.expenses =
+state.expenses.filter(
+e => e.id !== id
+);
+
+
+renderExpenses();
+
+renderDashboard();
+
+toast("Expense deleted.");
+
+};
+
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+function renderSettings(){
+
+$("settingShopName").value =
+state.settings.shopName || "";
+
+$("settingCurrency").value =
+state.settings.currency || "Rs ";
+
+$("settingLowStock").value =
+state.settings.lowStock ?? 5;
+
+}
+
+
+window.saveSettings =
+async () => {
+
+state.settings.shopName =
+$("settingShopName")
+.value.trim() ||
+"My Store";
+
+
+state.settings.currency =
+$("settingCurrency").value;
+
+
+state.settings.lowStock =
+Math.max(
+Number(
+$("settingLowStock").value
+) || 0,
+0
+);
+
+
+await saveSettingsCloud();
+
+
+if(
+currentUser &&
+!isAdmin
+){
+
+await updateDoc(
+doc(
+db,
+"users",
+currentUser.uid
+),
+{
+shopName:state.settings.shopName,
+lastActivity:serverTimestamp()
+}
+);
+
+}
+
+
+renderHeader();
+
+renderDashboard();
+
+renderProducts();
+
+toast("Settings saved.");
+
+};
+
+
+/* =========================================================
+   LOGOUT ALL MY DEVICES
+========================================================= */
+
+window.logoutAllMyDevices =
+async () => {
+
+if(!currentUser)return;
+
+
+const qs =
+await getDocs(
+collection(
+db,
+"users",
+currentUser.uid,
+"sessions"
+)
+);
+
+
+const batch =
+writeBatch(db);
+
+
+qs.docs.forEach(
+s =>
+batch.update(
+s.ref,
+{
+active:false,
+loggedOutAt:serverTimestamp()
+}
+)
+);
+
+
+await batch.commit();
+
+
+toast(
+"All device sessions were logged out."
+);
+
+
+await logout(false);
+
+};
+
+
+/* =========================================================
+   EXPORT
+========================================================= */
+
+window.exportData =
+() => {
+
+const b =
+new Blob(
+[
+JSON.stringify(
+state,
+null,
+2
+)
+],
+{
+type:"application/json"
+}
+);
+
+
+const a =
+document.createElement("a");
+
+
+a.href =
+URL.createObjectURL(b);
+
+
+a.download =
+"usman-store-desk-backup.json";
+
+
+a.click();
+
+
+URL.revokeObjectURL(
+a.href
+);
+
+
+toast(
+"Backup exported."
+);
+
+};
+
+
+/* =========================================================
+   IMPORT
+========================================================= */
+
+window.importData =
+async event => {
+
+const f =
+event.target.files[0];
+
+
+if(!f)return;
+
+
+try{
+
+const d =
+JSON.parse(
+await f.text()
+);
+
+
+if(
+!Array.isArray(d.products) ||
+!Array.isArray(d.sales) ||
+!Array.isArray(d.expenses)
+){
+
+throw Error();
+
+}
+
+
+const batch =
+writeBatch(db);
+
+
+for(
+const type of
+["products","sales","expenses"]
+){
+
+const qs =
+await getDocs(
+collection(
+db,
+"stores",
+currentUser.uid,
+type
+)
+);
+
+
+qs.docs.forEach(
+x =>
+batch.delete(x.ref)
+);
+
+}
+
+
+state = {
+
+...structuredClone(
+DEFAULT_STATE
+),
+
+...d,
+
+settings:{
+...DEFAULT_STATE.settings,
+...(d.settings || {})
+}
+
+};
+
+
+for(
+const type of
+["products","sales","expenses"]
+){
+
+for(
+const x of state[type]
+){
+
+batch.set(
+doc(
+db,
+"stores",
+currentUser.uid,
+type,
+x.id || uid()
+),
+Object.fromEntries(
+Object.entries(x)
+.filter(
+([k]) =>
+k !== "id"
+)
+)
+);
+
+}
+
+}
+
+
+batch.set(
+storeDoc(),
+{
+settings:state.settings,
+updatedAt:serverTimestamp()
+},
+{
+merge:true
+}
+);
+
+
+await batch.commit();
+
+await loadStore();
+
+renderDashboard();
+
+renderProducts();
+
+renderSales();
+
+renderExpenses();
+
+renderSettings();
+
+toast(
+"Backup imported successfully."
+);
+
+}catch{
+
+toast(
+"Invalid backup file."
+);
+
+}
+
+
+event.target.value = "";
+
+};
+
+
+/* =========================================================
+   RESET STORE DATA
+========================================================= */
+
+window.clearAllData =
+async () => {
+
+if(
+!confirm(
+"This will permanently remove all store data from this account. Continue?"
+)
+)return;
+
+
+const batch =
+writeBatch(db);
+
+
+for(
+const type of
+["products","sales","expenses"]
+){
+
+const qs =
+await getDocs(
+collection(
+db,
+"stores",
+currentUser.uid,
+type
+)
+);
+
+
+qs.docs.forEach(
+x =>
+batch.delete(x.ref)
+);
+
+}
+
+
+batch.set(
+storeDoc(),
+{
+settings:DEFAULT_STATE.settings,
+updatedAt:serverTimestamp()
+},
+{
+merge:true
+}
+);
+
+
+await batch.commit();
+
+
+state =
+structuredClone(
+DEFAULT_STATE
+);
+
+
+renderHeader();
+
+renderDashboard();
+
+renderProducts();
+
+renderSales();
+
+renderExpenses();
+
+renderSettings();
+
+toast(
+"Store data reset."
+);
+
+};
+
+
+/* =========================================================
+   ADMIN — ACCESS LOGS
+========================================================= */
+
+async function loadAccessLogs(){
+
+if(!isAdmin)return;
+
+
+const qs =
+await getDocs(
+collection(
+db,
+"accessLogs"
+)
+);
+
+
+const rows =
+qs.docs
+.map(
+d => ({
+id:d.id,
+...d.data()
+})
+)
+.sort(
+(a,b) =>
+(b.verifiedAt?.seconds || 0) -
+(a.verifiedAt?.seconds || 0)
+)
+.slice(0,30);
+
+
+$("accessLogsTable").innerHTML =
+rows.length
+
+? rows.map(
+x => `
+<tr>
+
+<td>
+${esc(x.email || "—")}
+</td>
+
+<td class="muted">
+${dateTime(x.verifiedAt)}
+</td>
+
+<td class="muted">
+${esc(x.device?.platform || "")}
+·
+${esc(x.device?.screen || "")}
+·
+${esc(x.device?.language || "")}
+</td>
+
+</tr>
+`
+).join("")
+
+: `
+<tr>
+<td colspan="3">
+<div class="empty">
+No access activity yet.
+</div>
+</td>
+</tr>
+`;
+
+}
+
+
+/* =========================================================
+   ADMIN — CUSTOMERS
+========================================================= */
+
+async function loadCustomers(){
+
+if(!isAdmin)return;
+
+
+const qs =
+await getDocs(
+collection(
+db,
+"users"
+)
+);
+
+
+const customers =
+qs.docs
+.map(
+d => ({
+id:d.id,
+...d.data()
+})
+)
+.filter(
+u =>
+u.role !== "admin" &&
+u.role !== "access"
+);
+
+
+$("adminCustomerCount").textContent =
+customers.length;
+
+
+$("adminApprovedCount").textContent =
+customers.filter(
+u =>
+u.status === "approved"
+).length;
+
+
+$("adminPendingCount").textContent =
+customers.filter(
+u =>
+u.status === "pending"
+).length;
+
+
+$("adminBlockedCount").textContent =
+customers.filter(
+u =>
+u.status === "blocked"
+).length;
+
+
+$("customersTable").innerHTML =
+customers.length
+
+? customers.map(
+u => {
+
+const badge =
+u.status === "approved"
+
+? '<span class="badge badge-green">Approved</span>'
+
+: u.status === "blocked"
+
+? '<span class="badge badge-red">Blocked</span>'
+
+: '<span class="badge badge-yellow">Unauthorized</span>';
+
+
+return `
+<tr>
+
+<td>
+<div class="product-name">
+${esc(u.name || "—")}
+</div>
+</td>
+
+<td>
+${esc(u.email || "—")}
+</td>
+
+<td>
+${badge}
+</td>
+
+<td class="muted">
+${dateTime(u.lastActivity)}
+</td>
+
+<td>
+${esc(u.shopName || "My Store")}
+</td>
+
+<td>
+
+<button
+class="btn btn-small btn-blue"
+onclick="setCustomerStatus('${u.id}','approved')">
+Approve
+</button>
+
+<button
+class="btn btn-small"
+onclick="setCustomerStatus('${u.id}','pending')">
+Unauthorized
+</button>
+
+<button
+class="btn btn-small btn-danger"
+onclick="setCustomerStatus('${u.id}','blocked')">
+Block
+</button>
+
+<button
+class="btn btn-small"
+onclick="showCustomerDevices('${u.id}')">
+Devices
+</button>
+
+<button
+class="btn btn-small"
+onclick="logoutCustomerDevices('${u.id}')">
+Logout All
+</button>
+
+</td>
+
+</tr>
+`;
+
+}
+).join("")
+
+: `
+<tr>
+<td colspan="6">
+<div class="empty">
+No customer accounts yet.
+</div>
+</td>
+</tr>
+`;
+
+}
+
+
+/* =========================================================
+   ADMIN — CUSTOMER STATUS
+========================================================= */
+
+window.setCustomerStatus =
+async (uid,status) => {
+
+if(!isAdmin)return;
+
+if(uid === currentUser.uid)return;
+
+
+await updateDoc(
+doc(db,"users",uid),
+{
+status,
+lastActivity:serverTimestamp()
+}
+);
+
+
+toast(
+`Customer marked ${status}.`
+);
+
+
+loadCustomers();
+
+};
+
+
+/* =========================================================
+   ADMIN — DEVICES
+========================================================= */
+
+window.showCustomerDevices =
+async uid => {
+
+if(!isAdmin)return;
+
+
+$("deviceList").textContent =
+"Loading devices...";
+
+
+$("deviceModal")
+.classList.add("open");
+
+
+const qs =
+await getDocs(
+collection(
+db,
+"users",
+uid,
+"sessions"
+)
+);
+
+
+if(qs.empty){
+
+$("deviceList").innerHTML =
+`
+<div
+class="empty"
+style="padding:18px">
+No device sessions found.
+</div>
+`;
+
+return;
+
+}
+
+
+const rows =
+qs.docs
+.map(
+d => ({
+id:d.id,
+...d.data()
+})
+)
+.sort(
+(a,b) =>
+(b.lastSeen?.seconds || 0) -
+(a.lastSeen?.seconds || 0)
+);
+
+
+$("deviceList").innerHTML =
+rows.map(
+s => `
+<div
+style="
+padding:12px 0;
+border-bottom:1px solid var(--line)
+">
+
+<div
+style="
+display:flex;
+justify-content:space-between;
+gap:10px;
+align-items:center">
+
+<b>
+${
+s.active
+? "🟢 Active"
+: "⚪ Logged out"
+}
+</b>
+
+${
+s.active
+
+? `
+<button
+class="btn btn-small btn-danger"
+onclick="logoutCustomerDevice(
+'${uid}',
+'${s.id}'
+)">
+Logout
+</button>
+`
+
+: ""
+}
+
+</div>
+
+
+<div
+class="muted"
+style="
+font-size:11px;
+margin-top:6px">
+
+Last seen:
+${dateTime(s.lastSeen)}
+<br>
+
+${esc(s.device?.platform || "")}
+·
+${esc(s.device?.screen || "")}
+·
+${esc(s.device?.language || "")}
+
+</div>
+
+</div>
+`
+).join("");
+
+};
+
+
+/* =========================================================
+   ADMIN — SINGLE DEVICE LOGOUT
+========================================================= */
+
+window.logoutCustomerDevice =
+async (uid,sid) => {
+
+if(!isAdmin)return;
+
+
+await updateDoc(
+doc(
+db,
+"users",
+uid,
+"sessions",
+sid
+),
+{
+active:false,
+loggedOutAt:serverTimestamp()
+}
+);
+
+
+toast(
+"Device logged out."
+);
+
+
+showCustomerDevices(uid);
+
+};
+
+
+/* =========================================================
+   ADMIN — ALL CUSTOMER DEVICES
+========================================================= */
+
+window.logoutCustomerDevices =
+async uid => {
+
+if(!isAdmin)return;
+
+
+const qs =
+await getDocs(
+collection(
+db,
+"users",
+uid,
+"sessions"
+)
+);
+
+
+const batch =
+writeBatch(db);
+
+
+qs.docs.forEach(
+s =>
+batch.update(
+s.ref,
+{
+active:false,
+loggedOutAt:serverTimestamp()
+}
+)
+);
+
+
+await batch.commit();
+
+
+toast(
+"Customer devices logged out."
+);
+
+
+showCustomerDevices(uid);
+
+};
+
+
+/* =========================================================
+   MODALS
+========================================================= */
+
+window.closeModal =
+id =>
+$(id).classList.remove("open");
+
+
+document
+.querySelectorAll(".modal-overlay")
+.forEach(
+o =>
+o.addEventListener(
+"click",
+e => {
+
+if(e.target === o){
+
+o.classList.remove(
+"open"
+);
+
+}
+
+}
+)
+);
+
+
+/* =========================================================
+   ESCAPE KEY
+========================================================= */
+
+document.addEventListener(
+"keydown",
+e => {
+
+if(e.key === "Escape"){
+
+document
+.querySelectorAll(
+".modal-overlay"
+)
+.forEach(
+m =>
+m.classList.remove("open")
+);
+
+closeSidebar();
+
+}
+
+}
+);
+
+
+/* =========================================================
+   ACTIVITY HEARTBEAT
+========================================================= */
+
+window.__activity =
+setInterval(
+async () => {
+
+if(currentUser){
+
+try{
+
+await updateDoc(
+doc(
+db,
+"users",
+currentUser.uid
+),
+{
+lastActivity:
+serverTimestamp()
+}
+);
+
+}catch{}
+
+}
+
+},
+120000
+);
+
+
+/* =========================================================
+   INITIAL AUTH ROUTE
+========================================================= */
+
+handleAuthRoute();
+
+</script>
+
+</body>
+</html>
+

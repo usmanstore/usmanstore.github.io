@@ -1,0 +1,74 @@
+USMAN STORE DESK — FINAL FIREBASE SETUP
+
+1) AUTHENTICATION
+Firebase Console -> Build -> Authentication -> Users
+
+A) ADMIN ACCOUNT (YOU)
+- Create/use your private admin email + private admin password.
+- In Firestore create: users/{ADMIN_UID}
+- Fields:
+  email = your admin email (string)
+  name = Usman (string)
+  role = admin (string)
+  status = approved (string)
+
+B) PAID ACCESS ACCOUNT (CUSTOMERS USE THIS)
+- Create a SECOND Firebase Authentication user with a different email + different password.
+- Give this second email/password only to customers who have paid Rs. 2999/-.
+- In Firestore create: users/{ACCESS_UID}
+- Fields:
+  email = the access email (string)
+  name = Paid Access (string)
+  role = access (string)
+  status = approved (string)
+
+IMPORTANT:
+The Access account MUST NOT have role=admin.
+The Admin account and Access account must be different Firebase users.
+
+2) FIRESTORE RULES
+Firebase Console -> Firestore Database -> Rules
+Delete the old rules and paste the complete contents of firestore.rules from this ZIP.
+Click Publish.
+
+3) CUSTOMER FLOW
+Customer opens the link -> enters the paid Access email/password -> access is verified -> customer sees:
+- Create Account
+- Login
+
+Create Account asks for the customer's own name, email and password. No Forgot Password button is provided.
+After account creation, the customer enters their private store.
+
+4) CUSTOMER STORE
+Each Firebase customer UID gets one private store at:
+ stores/{customerUID}
+with products, sales and expenses under that UID.
+The same customer account can be used on multiple devices and sees the same shop data.
+The customer can set their Shop Name in Settings. The Shop Name is also synced to their customer profile so the Admin can see it.
+
+5) ADMIN FLOW
+Admin uses the separate Admin Login button with the private Admin email/password.
+Only the account whose Firestore users/{UID}.role is admin gets the Customers panel.
+The Admin can see:
+- customer name/email/status
+- shop name
+- last activity
+- recent paid-access verification activity
+- devices/sessions
+- logout one device
+- logout all devices
+- approve / unauthorized / block customer
+
+6) ACCESS ACTIVITY
+Every successful paid-access verification is recorded in accessLogs. The Admin panel shows recent access activity including time and basic device information.
+
+7) PASSWORDS
+There is no Forgot Password button in the website. Password resets are handled manually by the administrator through Firebase Authentication, as requested.
+
+8) CONTACT / PRICE SHOWN ON ACCESS PAGE
+Price: Rs. 2999/-
+WhatsApp: +92 300 2430058
+Call: 03223506171
+
+9) RUNNING
+For local testing, open the folder in VS Code and use Live Server (recommended) or another local HTTP server. Firebase module imports should not be run by opening the HTML as a file:// URL.
