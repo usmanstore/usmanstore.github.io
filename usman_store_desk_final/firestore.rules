@@ -1,0 +1,69 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return signedIn()
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin"
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.status == "approved";
+    }
+
+    function isAccess() {
+      return signedIn()
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "access"
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.status == "approved";
+    }
+
+    // Admin can manage customer profiles. Customers can only read/update their own profile.
+    match /users/{userId} {
+      allow read: if signedIn() && (request.auth.uid == userId || isAdmin());
+
+      // Customer account creation from the paid-access flow.
+      allow create: if signedIn()
+        && request.auth.uid == userId
+        && request.resource.data.role == "customer"
+        && request.resource.data.status == "approved";
+
+      allow update: if isAdmin()
+        || (signedIn()
+          && request.auth.uid == userId
+          && request.resource.data.role == resource.data.role
+          && request.resource.data.status == resource.data.status);
+
+      allow delete: if isAdmin();
+
+      match /sessions/{sessionId} {
+        allow read, write: if signedIn() && (request.auth.uid == userId || isAdmin());
+      }
+    }
+
+    // Shared paid-access account can record a gate verification, but cannot read other data.
+    match /accessLogs/{logId} {
+      allow create: if isAccess();
+      allow read: if isAdmin();
+      allow update, delete: if isAdmin();
+    }
+
+    // Every customer's private store is isolated by Firebase UID.
+    match /stores/{userId} {
+      allow read, write: if signedIn() && (request.auth.uid == userId || isAdmin());
+
+      match /products/{productId} {
+        allow read, write: if signedIn() && (request.auth.uid == userId || isAdmin());
+      }
+
+      match /sales/{saleId} {
+        allow read, write: if signedIn() && (request.auth.uid == userId || isAdmin());
+      }
+
+      match /expenses/{expenseId} {
+        allow read, write: if signedIn() && (request.auth.uid == userId || isAdmin());
+      }
+    }
+  }
+}
